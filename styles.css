@@ -9,14 +9,32 @@ body {
     width: 50px;
     background-color: black;
     position: absolute;
-    top: 700px;
+    top: 530px;
     left: 300px;
 }
 
 .rail {
     position:absolute;
-    top: 500px;
+    top: 550px;
+    left: 325px;
     width: 4000px;
     height: 10px;
     background-color: black;
 }
+
+.typing-effect {
+    font-family: monospace;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 20px 0;
+    height: 400px;
+    width: 400px;
+}
+
+#typing-effect0 {
+    top: 200px;
+    left: 700px;
+}
+
