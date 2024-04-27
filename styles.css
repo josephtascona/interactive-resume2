@@ -1,8 +1,22 @@
-#main-box {
+body {
+    /* overflow: hidden; */
+    position: relative;
+    margin: 0px;
+}
+
+#box {
+    height: 50px;
+    width: 50px;
+    background-color: black;
     position: absolute;
     top: 700px;
     left: 300px;
-    height: 50px;
-    width: 50px;
-    background-color: black
+}
+
+.rail {
+    position:absolute;
+    top: 500px;
+    width: 4000px;
+    height: 10px;
+    background-color: black;
 }
