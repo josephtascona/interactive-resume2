@@ -57,6 +57,30 @@ body {
 
 #typing-effect0 {
     top: 100px;
-    left: 700px;
+    left: 550px;
 }
 
+#typing-effect1 {
+    top: 100px;
+    left: 1050px;
+}
+
+#spacebar {
+    width: 250px;
+    height: 100px;
+    background-color: black;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: none;
+}
+
+#spacebar p {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    padding: 10px;
+    margin: 0;
+    color: white;
+}
