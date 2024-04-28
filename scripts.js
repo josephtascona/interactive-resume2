@@ -17,12 +17,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let num = -1;
     let i = 0;
+    let j = 0;
+    var title = ["About", "Education"];
     var text = ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione! Aliquid, id?", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione! Aliquid, id?"];
     var typingDiv;
     var paused = false;
 
-    function startTyping() {
-        var typingInterval = setInterval(function () {
+    function progressBar() {
+        var progressInterval = setInterval(function () {
+            var progressElement = document.querySelector("#progress-bar p");
+            progressElement.innerHTML = Math.round((((boxLeft-300)/(3300-300) + (boxTop-530)/(3530-530))/2)*100) + "%"
+        }, 35); // Adjust interval as needed
+    }
+    progressBar();
+
+    function startTypingText() {
+        var textTypingInterval = setInterval(function () {
             if (num !== -1) {
                 if (typingDiv.innerHTML !== text[num]) {
                     if (i < text[num].length) {
@@ -34,7 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     paused = false;
                     intervalOn = "";
                     spacebar.style.display = "block";
-                    clearInterval(typingInterval);
+                    clearInterval(textTypingInterval);
+                }
+            }
+        }, 35); // Adjust interval as needed
+    }
+
+    function startTypingTitle() {
+        var titleTypingInterval = setInterval(function () {
+            if (num !== -1) {
+                if (typingH1.innerHTML !== title[num]) {
+                    if (j < title[num].length) {
+                        typingH1.innerHTML += title[num].charAt(j);
+                        j++;
+                    }
+                } else {
+                    j = 0;
+                    clearInterval(titleTypingInterval);
                 }
             }
         }, 35); // Adjust interval as needed
@@ -65,14 +91,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (boxLeft == 700 && num === -1) {
                     num += 1;
                     typingDiv = document.getElementById('typing-effect' + num);
+                    typingH1 = document.getElementById('title' + num);
                     paused = true;
-                    startTyping();
+                    startTypingText();
+                    startTypingTitle();
                 }
-                if (boxLeft == 1200 && num === 0) {
+                if (boxLeft == 1220 && num === 0) {
                     num += 1;
                     typingDiv = document.getElementById('typing-effect' + num);
+                    typingH1 = document.getElementById('title' + num);
                     paused = true;
-                    startTyping();
+                    startTypingText();
+                    startTypingTitle();
                 }
             }
 
@@ -103,15 +133,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (boxLeft == 700 && num === -1) {
                             num += 1;
                             typingDiv = document.getElementById('typing-effect' + num);
+                            typingH1 = document.getElementById('title' + num);
                             paused = true;
-                            startTyping();
+                            startTypingText();
+                            startTypingTitle();
                             clearInterval(forwardInterval);
                         }
-                        if (boxLeft == 1200 && num === 0) {
+                        if (boxLeft == 1220 && num === 0) {
                             num += 1;
                             typingDiv = document.getElementById('typing-effect' + num);
+                            typingH1 = document.getElementById('title' + num);
                             paused = true;
-                            startTyping();
+                            startTypingText();
+                            startTypingTitle();
                             clearInterval(forwardInterval);
                         }
                     }, 35);
@@ -166,15 +200,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (boxLeft == 700 && num === -1) {
                         num += 1;
                         typingDiv = document.getElementById('typing-effect' + num);
+                        typingH1 = document.getElementById('title' + num);
                         paused = true;
-                        startTyping();
+                        startTypingText();
+                        startTypingTitle();
                         clearInterval(forwardInterval);
                     }
-                    if (boxLeft == 1200 && num === 0) {
+                    if (boxLeft == 1220 && num === 0) {
                         num += 1;
                         typingDiv = document.getElementById('typing-effect' + num);
+                        typingH1 = document.getElementById('title' + num);
                         paused = true;
-                        startTyping();
+                        startTypingText();
+                        startTypingTitle();
                         clearInterval(forwardInterval);
                     }
                 }, 35);
