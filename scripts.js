@@ -1,3 +1,7 @@
+window.addEventListener('beforeunload', function () {
+    window.scrollTo(0, 0);
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     var box = document.querySelector('#box');
     var forwardInterval;
@@ -8,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var boxStyle = getComputedStyle(box);
     // Parse the left position as an integer
     var boxLeft = parseInt(boxStyle.left) || 0;
+    var boxTop = parseInt(boxStyle.top) || 0;
 
     let num = -1;
     let i = 0;
@@ -16,18 +21,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Listen for keydown event
     document.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowUp") {
+        if (event.key === "d") {
             if (intervalOn === "forwardInterval") {
                 clearInterval(forwardInterval);
             } else if (intervalOn === "backwardInterval") {
                 clearInterval(backwardInterval);
             }
             intervalOn = "forwardInterval";
-            // Move the box 5 pixels to the right
-            boxLeft += 5;
-            box.style.left = boxLeft + "px";
+            if (boxLeft < 2105 && boxTop === 530) {
+                // Move the box 5 pixels to the right
+                boxLeft += 5;
+                box.style.left = boxLeft + "px";
+            } else if (boxLeft === 2105 && boxTop < 2150) {
+                boxTop += 5;
+                box.style.top = boxTop + "px";
+            }
+            if (boxLeft === 2105 && boxTop === 800) {
+                window.scrollTo(1550, 700);
+            }
             if (boxLeft == 1750) {
-                window.scrollTo(1550, window.scrollY);
+                window.scrollTo(1550, 0);
             }
             if (boxLeft == 375) {
                 num += 1
@@ -45,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } 
         
-        if (event.key === " ") {
+        if (event.key === "s") {
             // Stop the repeating action when the key is released
             if (intervalOn === "forwardInterval") {
                 clearInterval(forwardInterval);
@@ -56,10 +69,19 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 intervalOn = "forwardInterval";
                 forwardInterval = setInterval(function () {
-                    boxLeft += 5;
-                    box.style.left = boxLeft + "px";
+                    if (boxLeft < 2105 && boxTop === 530) {
+                        // Move the box 5 pixels to the right
+                        boxLeft += 5;
+                        box.style.left = boxLeft + "px";
+                    } else if (boxLeft === 2105 && boxTop < 2150) {
+                        boxTop += 5;
+                        box.style.top = boxTop + "px";
+                    }
+                    if (boxLeft === 2105 && boxTop === 800) {
+                        window.scrollTo(1550, 700);
+                    }
                     if (boxLeft == 1750) {
-                        window.scrollTo(1550, window.scrollY);
+                        window.scrollTo(1550, 0);
                     }
                     if (boxLeft == 375) {
                         num += 1
@@ -79,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
         
-        if (event.key == "ArrowDown") {
+        if (event.key == "a") {
             if (intervalOn === "forwardInterval") {
                 clearInterval(forwardInterval);
             } else if (intervalOn === "backwardInterval") {
@@ -87,11 +109,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             intervalOn = "backwardInterval";
             if (boxLeft >= 305) {
-                boxLeft -= 5;
-                box.style.left = boxLeft + "px";
+                if (boxLeft <= 2105 && boxTop === 530) {
+                    // Move the box 5 pixels to the right
+                    boxLeft -= 5;
+                    box.style.left = boxLeft + "px";
+                } else if (boxLeft === 2105 && boxTop < 2150) {
+                    boxTop -= 5;
+                    box.style.top = boxTop + "px";
+                }
+            }
+            if (boxLeft === 2105 && boxTop === 800) {
+                window.scrollTo(1550, 0);
             }
             if (boxLeft == 1750) {
-                window.scrollTo(0, window.scrollY);
+                window.scrollTo(0, 0);
             }
             if (boxLeft == 375) {
                 num -= 1
@@ -100,13 +131,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.addEventListener("keyup", function (event) {
-        if (event.key === "ArrowUp") {
+        if (event.key === "d") {
             // Start a timer to repeat the action every 35 milliseconds
             forwardInterval = setInterval(function () {
-                boxLeft += 5;
-                box.style.left = boxLeft + "px";
+                if (boxLeft < 2105 && boxTop === 530) {
+                    // Move the box 5 pixels to the right
+                    boxLeft += 5;
+                    box.style.left = boxLeft + "px";
+                } else if (boxLeft === 2105 && boxTop < 2150) {
+                    boxTop += 5;
+                    box.style.top = boxTop + "px";
+                }
                 if (boxLeft == 1750) {
-                    window.scrollTo(1550, window.scrollY);
+                    window.scrollTo(1550, 0);
+                }
+                if (boxLeft === 2105 && boxTop === 800) {
+                    window.scrollTo(1550, 700);
                 }
                 if (boxLeft == 375) {
                     num += 1
@@ -125,15 +165,24 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 35);
         } 
         
-        if (event.key === "ArrowDown") {
+        if (event.key === "a") {
             // Start a timer to repeat the action every 35 milliseconds
             backwardInterval = setInterval(function () {
                 if (boxLeft >= 305) {
-                    boxLeft -= 5;
-                    box.style.left = boxLeft + "px";
+                    if (boxLeft <= 2105 && boxTop === 530) {
+                        // Move the box 5 pixels to the right
+                        boxLeft -= 5;
+                        box.style.left = boxLeft + "px";
+                    } else if (boxLeft === 2105 && boxTop < 2150) {
+                        boxTop -= 5;
+                        box.style.top = boxTop + "px";
+                    }
+                }
+                if (boxLeft === 2105 && boxTop === 800) {
+                    window.scrollTo(1550, 0);
                 }
                 if (boxLeft == 1750) {
-                    window.scrollTo(0, window.scrollY);
+                    window.scrollTo(0, 0);
                 }
                 if (boxLeft == 375) {
                     num -= 1

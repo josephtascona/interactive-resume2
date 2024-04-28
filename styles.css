@@ -4,6 +4,16 @@ body {
     margin: 0px;
 }
 
+#length {
+    width: 10000px;
+    height: 1px;
+}
+
+#height {
+    height: 10000px;
+    width: 1px;
+}
+
 #box {
     height: 50px;
     width: 50px;
@@ -15,11 +25,21 @@ body {
 
 .rail {
     position: absolute;
+    background-color: black;
+}
+
+#first-rail {
     top: 550px;
     left: 325px;
-    width: 4000px;
+    width: 1800px;
     height: 10px;
-    background-color: black;
+}
+
+#second-rail {
+    top: 550px;
+    left: 2125px;
+    height: 1800px;
+    width: 10px
 }
 
 .typing-effect {
