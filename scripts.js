@@ -25,16 +25,17 @@ document.addEventListener("DOMContentLoaded", function () {
             if (boxLeft == 500) {
                 num += 1
                 typingDiv = document.getElementById('typing-effect' + num);
-                i = 0
             }
             if (num != -1) {
-                if (i < text[num].length) {
-                    typingDiv.innerHTML += text[num].charAt(i);
-                    if (typingDiv.innerHTML != "") {
+                if (typingDiv.innerHTML != text[num]) {
+                    if (i < text[num].length) {
+                        typingDiv.innerHTML += text[num].charAt(i);
                         i++;
                     }
+                } else {
+                    i = 0
                 }
-            }
+        }
         } 
         
         if (event.key === " ") {
@@ -52,13 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (boxLeft == 500) {
                 num -= 1
-                typingDiv = document.getElementById('typing-effect' + num);
-            }
-            if (num != -1) {
-                if (i > 0) {
-                    typingDiv.innerHTML = typingDiv.innerHTML.substring(0, i - 2);
-                    i-=2;
-                }
             }
         }
     });
@@ -75,14 +69,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (boxLeft == 500) {
                     num += 1
                     typingDiv = document.getElementById('typing-effect' + num);
-                    i = 0
                 }
                 if (num != -1) {
-                    if (i < text[num].length) {
-                        typingDiv.innerHTML += text[num].charAt(i);
-                        if (typingDiv.innerHTML != "") {
+                    if (typingDiv.innerHTML != text[num]) {
+                        if (i < text[num].length) {
+                            typingDiv.innerHTML += text[num].charAt(i);
                             i++;
                         }
+                    } else {
+                        i = 0
                     }
                 }
             }, 35);
@@ -100,13 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 if (boxLeft == 500) {
                     num -= 1
-                    typingDiv = document.getElementById('typing-effect' + num);
-                }
-                if (num != -1) {
-                    if (i > 0) {
-                        typingDiv.innerHTML = typingDiv.innerHTML.substring(0, i - 2);
-                        i-=2;
-                    }
                 }
             }, 35);
         }
