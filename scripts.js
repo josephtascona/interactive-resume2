@@ -5,6 +5,7 @@ window.addEventListener('beforeunload', function () {
 document.addEventListener("DOMContentLoaded", function () {
     var box = document.querySelector('#box');
     var spacebar = document.querySelector('#spacebar');
+    var backwards = document.querySelector('#backwards');
     var forwardInterval;
     var backwardInterval;
     var intervalOn = "";
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function progressBar() {
         var progressInterval = setInterval(function () {
             var progressElement = document.querySelector("#progress-bar p");
-            progressElement.innerHTML = Math.round((((boxLeft-300)/(3300-300) + (boxTop-530)/(3530-530))/2)*100) + "%"
+            progressElement.innerHTML = Math.round((((boxLeft-300)/(3205-300) + (boxTop-530)/(2080-530))/2)*100) + "%"
         }, 35); // Adjust interval as needed
     }
     progressBar();
@@ -69,45 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Listen for keydown event
     document.addEventListener("keydown", function (event) {
         if (!paused) {
-            if (event.key === "d") {
-                spacebar.style.display = "none";
-                clearInterval(forwardInterval);
-                clearInterval(backwardInterval);
-                intervalOn = "forwardInterval";
-                if (boxLeft < 2105 && boxTop === 530) {
-                    // Move the box 5 pixels to the right
-                    boxLeft += 5;
-                    box.style.left = boxLeft + "px";
-                } else if (boxLeft === 2105 && boxTop < 2150) {
-                    boxTop += 5;
-                    box.style.top = boxTop + "px";
-                }
-                if (boxLeft === 2105 && boxTop === 800) {
-                    window.scrollTo(1550, 700);
-                }
-                if (boxLeft == 1750) {
-                    window.scrollTo(1550, 0);
-                }
-                if (boxLeft == 700 && num === -1) {
-                    num += 1;
-                    typingDiv = document.getElementById('typing-effect' + num);
-                    typingH1 = document.getElementById('title' + num);
-                    paused = true;
-                    startTypingText();
-                    startTypingTitle();
-                }
-                if (boxLeft == 1220 && num === 0) {
-                    num += 1;
-                    typingDiv = document.getElementById('typing-effect' + num);
-                    typingH1 = document.getElementById('title' + num);
-                    paused = true;
-                    startTypingText();
-                    startTypingTitle();
-                }
-            }
-
             if (event.key === "s") {
                 spacebar.style.display = "none";
+                backwards.style.display = "none";
                 // Stop the repeating action when the key is released
                 if (intervalOn == "forwardInterval" || intervalOn == "backwardInterval") {
                     clearInterval(forwardInterval);
@@ -116,19 +81,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     intervalOn = "forwardInterval";
                     forwardInterval = setInterval(function () {
-                        if (boxLeft < 2105 && boxTop === 530) {
-                            // Move the box 5 pixels to the right
-                            boxLeft += 5;
-                            box.style.left = boxLeft + "px";
-                        } else if (boxLeft === 2105 && boxTop < 2150) {
-                            boxTop += 5;
-                            box.style.top = boxTop + "px";
+                        if (boxLeft < 3205) {
+                            if (boxLeft < 2105 && boxTop === 530) {
+                                // Move the box 5 pixels to the right
+                                boxLeft += 5;
+                                box.style.left = boxLeft + "px";
+                            } else if (boxLeft === 2105 && boxTop < 2080) {
+                                boxTop += 5;
+                                box.style.top = boxTop + "px";
+                            } else {
+                                boxLeft += 5;
+                                box.style.left = boxLeft + "px";
+                            }
                         }
                         if (boxLeft === 2105 && boxTop === 800) {
                             window.scrollTo(1550, 700);
                         }
+                        if (boxLeft === 2105 && boxTop === 1500) {
+                            window.scrollTo(1550, 1400);
+                        }
                         if (boxLeft == 1750) {
                             window.scrollTo(1550, 0);
+                        }
+                        if (boxLeft == 1820) {
+                            backwards.style.display = "block";
+                            intervalOn = "";
+                            clearInterval(forwardInterval);
                         }
                         if (boxLeft == 700 && num === -1) {
                             num += 1;
@@ -154,21 +132,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (event.key == "a") {
                 spacebar.style.display = "none";
+                backwards.style.display = "none";
                 clearInterval(forwardInterval);
                 clearInterval(backwardInterval);
                 intervalOn = "backwardInterval";
-                if (boxLeft >= 305) {
+                if (boxLeft > 300) {
                     if (boxLeft <= 2105 && boxTop === 530) {
                         // Move the box 5 pixels to the right
                         boxLeft -= 5;
                         box.style.left = boxLeft + "px";
-                    } else if (boxLeft === 2105 && boxTop < 2150) {
+                    } else if (boxLeft === 2105 && boxTop <= 2080) {
                         boxTop -= 5;
                         box.style.top = boxTop + "px";
+                    } else {
+                        boxLeft -= 5;
+                        box.style.left = boxLeft + "px";
                     }
                 }
                 if (boxLeft === 2105 && boxTop === 800) {
                     window.scrollTo(1550, 0);
+                }
+                if (boxLeft === 2105 && boxTop === 1500) {
+                    window.scrollTo(1550, 700);
                 }
                 if (boxLeft == 1750) {
                     window.scrollTo(0, 0);
@@ -179,61 +164,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("keyup", function (event) {
         if (!paused) {
-            if (event.key === "d") {
-                intervalOn = "forwardInterval";
-                // Start a timer to repeat the action every 35 milliseconds
-                forwardInterval = setInterval(function () {
-                    if (boxLeft < 2105 && boxTop === 530) {
-                        // Move the box 5 pixels to the right
-                        boxLeft += 5;
-                        box.style.left = boxLeft + "px";
-                    } else if (boxLeft === 2105 && boxTop < 2150) {
-                        boxTop += 5;
-                        box.style.top = boxTop + "px";
-                    }
-                    if (boxLeft == 1750) {
-                        window.scrollTo(1550, 0);
-                    }
-                    if (boxLeft === 2105 && boxTop === 800) {
-                        window.scrollTo(1550, 700);
-                    }
-                    if (boxLeft == 700 && num === -1) {
-                        num += 1;
-                        typingDiv = document.getElementById('typing-effect' + num);
-                        typingH1 = document.getElementById('title' + num);
-                        paused = true;
-                        startTypingText();
-                        startTypingTitle();
-                        clearInterval(forwardInterval);
-                    }
-                    if (boxLeft == 1220 && num === 0) {
-                        num += 1;
-                        typingDiv = document.getElementById('typing-effect' + num);
-                        typingH1 = document.getElementById('title' + num);
-                        paused = true;
-                        startTypingText();
-                        startTypingTitle();
-                        clearInterval(forwardInterval);
-                    }
-                }, 35);
-            }
-
             if (event.key === "a") {
-                intervalOn = "backwardInterval"
                 // Start a timer to repeat the action every 35 milliseconds
                 backwardInterval = setInterval(function () {
-                    if (boxLeft >= 305) {
+                    if (boxLeft > 300) {
                         if (boxLeft <= 2105 && boxTop === 530) {
                             // Move the box 5 pixels to the right
                             boxLeft -= 5;
                             box.style.left = boxLeft + "px";
-                        } else if (boxLeft === 2105 && boxTop < 2150) {
+                        } else if (boxLeft === 2105 && boxTop <= 2080) {
                             boxTop -= 5;
                             box.style.top = boxTop + "px";
+                        } else {
+                            boxLeft -= 5;
+                            box.style.left = boxLeft + "px";
                         }
+                    }
+                    if (boxLeft == 300) {
+                        intervalOn = "";
+                        clearInterval(backwardInterval);
                     }
                     if (boxLeft === 2105 && boxTop === 800) {
                         window.scrollTo(1550, 0);
+                    }
+                    if (boxLeft === 2105 && boxTop === 1500) {
+                        window.scrollTo(1550, 700);
                     }
                     if (boxLeft == 1750) {
                         window.scrollTo(0, 0);
