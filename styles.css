@@ -70,6 +70,7 @@ body {
 #typing-effect1 {
     top: 100px;
     left: 1050px;
+    width: 500px;
 }
 
 #spacebar {
@@ -93,9 +94,9 @@ body {
 }
 
 #backwards {
-    width: 250px;
-    height: 140px;
-    background-color: red;
+    width: 350px;
+    height: 180px;
+    background-color: black;
     position: absolute;
     top: 20px;
     left: 2150px;

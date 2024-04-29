@@ -20,9 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let i = 0;
     let j = 0;
     var title = ["About", "Education"];
-    var text = ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione! Aliquid, id?", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione! Aliquid, id?"];
+    var text = ["Lorem ipsum dolor sit amet consectetur adipisicing elit.\nMinus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione!\nAliquid, id?", "Bachelor of Science in Mathematics and Physics, 2026\nUniversity of Toronto, Toronto, Ontario"];
     var typingDiv;
     var paused = false;
+    var backwardsShown = false;
+    var addedChars = 0;
 
     function progressBar() {
         var progressInterval = setInterval(function () {
@@ -35,13 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function startTypingText() {
         var textTypingInterval = setInterval(function () {
             if (num !== -1) {
-                if (typingDiv.innerHTML !== text[num]) {
-                    if (i < text[num].length) {
+                if (typingDiv.innerHTML.length !== (text[num].length + addedChars)) {
+                    if (text[num].charAt(i) === '\n') {
+                        typingDiv.innerHTML += '<br><br>'; // Insert two line breaks
+                        addedChars += 7;
+                    } else {
                         typingDiv.innerHTML += text[num].charAt(i);
-                        i++;
                     }
+                    i++;
                 } else {
                     i = 0;
+                    addedChars = 0;
                     paused = false;
                     intervalOn = "";
                     spacebar.style.display = "block";
@@ -104,9 +110,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             window.scrollTo(1550, 0);
                         }
                         if (boxLeft == 1820) {
-                            backwards.style.display = "block";
-                            intervalOn = "";
-                            clearInterval(forwardInterval);
+                            if (!backwardsShown) {
+                                backwards.style.display = "block";
+                                intervalOn = "";
+                                backwardsShown = true;
+                                clearInterval(forwardInterval);
+                            }
                         }
                         if (boxLeft == 700 && num === -1) {
                             num += 1;
@@ -130,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
-            if (event.key == "a") {
+            if (event.key === "a") {
                 spacebar.style.display = "none";
                 backwards.style.display = "none";
                 clearInterval(forwardInterval);
