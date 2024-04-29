@@ -189,6 +189,18 @@ body {
     display: none;
 }
 
+#forwardArrow2 {
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 250px;
+    left: 3220px;
+    background-image: url('./forward_arrow_icon.png');
+    background-size: cover;
+    display: none;
+}
+
 #backwardArrow1 {
     transform: rotateY(180deg);
     cursor: pointer;
@@ -196,6 +208,19 @@ body {
     height: 200px;
     position: absolute;
     top: 250px;
+    left: 1600px;
+    background-image: url('./forward_arrow_icon.png');
+    background-size: cover;
+    display: none;
+}
+
+#backwardArrow2 {
+    transform: rotateY(180deg);
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 950px;
     left: 1600px;
     background-image: url('./forward_arrow_icon.png');
     background-size: cover;

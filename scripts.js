@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var backwardArrowMessage = document.querySelector('#backwardArrowMessage');
     var forwardArrowMessage = document.querySelector('#forwardArrowMessage');
     var backwardArrow1 = document.querySelector('#backwardArrow1');
+    var backwardArrow2 = document.querySelector('#backwardArrow2');
     var forwardArrow1 = document.querySelector('#forwardArrow1');
+    var forwardArrow2 = document.querySelector('#forwardArrow2');
     var forwardInterval;
     var intervalOn = "";
     var pastLocations = [];
@@ -48,6 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(forwardInterval)
     });
 
+    backwardArrow2.addEventListener('click', function () {
+        pastLocations.unshift([boxLeft, boxTop]);
+        boxLeft = 2105;
+        boxTop = 530;
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        window.scrollTo(1550, 0);
+        clearInterval(forwardInterval)
+    });
+
     forwardArrow1.addEventListener('click', function() {
         backwardArrow1.style.display = "block";
         forwardArrow1.style.display = "none";
@@ -59,6 +72,17 @@ document.addEventListener("DOMContentLoaded", function () {
         intervalOn = "";
         forwardArrowMessage.style.display = "none";
         window.scrollTo(1550, 0);
+        clearInterval(forwardInterval)
+    });
+
+    forwardArrow2.addEventListener('click', function () {
+        var currentValues = pastLocations.shift();
+        boxLeft = currentValues[0];
+        boxTop = currentValues[1];
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        window.scrollTo(1550, 700);
         clearInterval(forwardInterval)
     });
 
@@ -134,8 +158,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                 box.style.left = boxLeft + "px";
                             }
                         }
-                        if (boxLeft === 2105 && boxTop === 800) {
+                        if (boxLeft === 2105 && boxTop === 750) {
                             window.scrollTo(1550, 700);
+                            backwardArrow2.style.display = "block";
+                            forwardArrow2.style.display = "block";
                         }
                         if (boxLeft === 2105 && boxTop === 1500) {
                             window.scrollTo(1550, 1400);
