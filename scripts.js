@@ -5,10 +5,13 @@ window.addEventListener('beforeunload', function () {
 document.addEventListener("DOMContentLoaded", function () {
     var box = document.querySelector('#box');
     var spacebar = document.querySelector('#spacebar');
-    var backwards = document.querySelector('#backwards');
+    var arrowMessage = document.querySelector('#arrowMessage');
+    var backwardArrow1 = document.querySelector('#backwardArrow1');
+    var forwardArrow1 = document.querySelector('#forwardArrow1');
     var forwardInterval;
-    var backwardInterval;
     var intervalOn = "";
+    var pastLocations = [];
+    var arrowMessageShown = false;
 
     // Get the computed style of the box
     var boxStyle = getComputedStyle(box);
@@ -23,8 +26,34 @@ document.addEventListener("DOMContentLoaded", function () {
     var text = ["Lorem ipsum dolor sit amet consectetur adipisicing elit.\nMinus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione!\nAliquid, id?", "Bachelor of Science in Mathematics and Physics, 2026\nUniversity of Toronto, Toronto, Ontario"];
     var typingDiv;
     var paused = false;
-    var backwardsShown = false;
     var addedChars = 0;
+
+    backwardArrow1.addEventListener('click', function() {
+        backwardArrow1.style.display = "none";
+        forwardArrow1.style.display = "block";
+        pastLocations.unshift([boxLeft, boxTop]);
+        boxLeft = 800;
+        boxTop = 530
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        arrowMessage.style.display = "none";
+        window.scrollTo(0,0);
+        clearInterval(forwardInterval)
+    });
+
+    forwardArrow1.addEventListener('click', function() {
+        backwardArrow1.style.display = "block";
+        forwardArrow1.style.display = "none";
+        var currentValues = pastLocations.shift();
+        boxLeft = currentValues[0];
+        boxTop = currentValues[1];
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        window.scrollTo(1550, 0);
+        clearInterval(forwardInterval)
+    });
 
     function progressBar() {
         var progressInterval = setInterval(function () {
@@ -78,11 +107,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!paused) {
             if (event.key === "s") {
                 spacebar.style.display = "none";
-                backwards.style.display = "none";
+                arrowMessage.style.display = "none";
                 // Stop the repeating action when the key is released
-                if (intervalOn == "forwardInterval" || intervalOn == "backwardInterval") {
+                if (intervalOn == "forwardInterval") {
                     clearInterval(forwardInterval);
-                    clearInterval(backwardInterval);
                     intervalOn = "";
                 } else {
                     intervalOn = "forwardInterval";
@@ -108,14 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         if (boxLeft == 1750) {
                             window.scrollTo(1550, 0);
-                        }
-                        if (boxLeft == 1820) {
-                            if (!backwardsShown) {
-                                backwards.style.display = "block";
-                                intervalOn = "";
-                                backwardsShown = true;
-                                clearInterval(forwardInterval);
+                            if (arrowMessageShown) {
+                                backwardArrow1.style.display = "block";
+                                forwardArrow1.style.display = "none";
                             }
+                        }
+                        if (boxLeft == 1820 && !arrowMessageShown) {
+                            backwardArrow1.style.display = "block";
+                            arrowMessage.style.display = "block";
+                            intervalOn = "";
+                            arrowMessageShown = true;
+                            clearInterval(forwardInterval);
                         }
                         if (boxLeft == 700 && num === -1) {
                             num += 1;
@@ -126,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             startTypingTitle();
                             clearInterval(forwardInterval);
                         }
-                        if (boxLeft == 1220 && num === 0) {
+                        if (boxLeft == 1280 && num === 0) {
                             num += 1;
                             typingDiv = document.getElementById('typing-effect' + num);
                             typingH1 = document.getElementById('title' + num);
@@ -137,72 +168,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     }, 35);
                 }
-            }
-
-            if (event.key === "a") {
-                spacebar.style.display = "none";
-                backwards.style.display = "none";
-                clearInterval(forwardInterval);
-                clearInterval(backwardInterval);
-                intervalOn = "backwardInterval";
-                if (boxLeft > 300) {
-                    if (boxLeft <= 2105 && boxTop === 530) {
-                        // Move the box 5 pixels to the right
-                        boxLeft -= 5;
-                        box.style.left = boxLeft + "px";
-                    } else if (boxLeft === 2105 && boxTop <= 2080) {
-                        boxTop -= 5;
-                        box.style.top = boxTop + "px";
-                    } else {
-                        boxLeft -= 5;
-                        box.style.left = boxLeft + "px";
-                    }
-                }
-                if (boxLeft === 2105 && boxTop === 800) {
-                    window.scrollTo(1550, 0);
-                }
-                if (boxLeft === 2105 && boxTop === 1500) {
-                    window.scrollTo(1550, 700);
-                }
-                if (boxLeft == 1750) {
-                    window.scrollTo(0, 0);
-                }
-            }
-        }
-    });
-
-    document.addEventListener("keyup", function (event) {
-        if (!paused) {
-            if (event.key === "a") {
-                // Start a timer to repeat the action every 35 milliseconds
-                backwardInterval = setInterval(function () {
-                    if (boxLeft > 300) {
-                        if (boxLeft <= 2105 && boxTop === 530) {
-                            // Move the box 5 pixels to the right
-                            boxLeft -= 5;
-                            box.style.left = boxLeft + "px";
-                        } else if (boxLeft === 2105 && boxTop <= 2080) {
-                            boxTop -= 5;
-                            box.style.top = boxTop + "px";
-                        } else {
-                            boxLeft -= 5;
-                            box.style.left = boxLeft + "px";
-                        }
-                    }
-                    if (boxLeft == 300) {
-                        intervalOn = "";
-                        clearInterval(backwardInterval);
-                    }
-                    if (boxLeft === 2105 && boxTop === 800) {
-                        window.scrollTo(1550, 0);
-                    }
-                    if (boxLeft === 2105 && boxTop === 1500) {
-                        window.scrollTo(1550, 700);
-                    }
-                    if (boxLeft == 1750) {
-                        window.scrollTo(0, 0);
-                    }
-                }, 35);
             }
         }
     });

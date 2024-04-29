@@ -74,8 +74,8 @@ body {
 }
 
 #spacebar {
-    width: 250px;
-    height: 100px;
+    width: 200px;
+    height: 60px;
     background-color: black;
     position: fixed;
     top: 20px;
@@ -93,17 +93,17 @@ body {
     color: white;
 }
 
-#backwards {
-    width: 350px;
-    height: 180px;
+#arrowMessage {
+    width: 250px;
+    height: 100px;
     background-color: black;
     position: absolute;
-    top: 20px;
-    left: 2150px;
+    top: 300px;
+    left: 1800px;
     display: none;
 }
 
-#backwards p {
+#arrowMessage p {
     font-family: "Chakra Petch", sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -142,8 +142,8 @@ body {
     right: 20px;
     border: 2px solid black;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,5 +154,30 @@ body {
     font-family: "Chakra Petch", sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 20px;
+    font-size: 25px;
+}
+
+#forwardArrow1 {
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 250px;
+    left: 1700px;
+    background-image: url('./forward_arrow_icon.png');
+    background-size: cover;
+    display: none;
+}
+
+#backwardArrow1 {
+    transform: rotateY(180deg);
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 250px;
+    left: 1600px;
+    background-image: url('./forward_arrow_icon.png');
+    background-size: cover;
+    display: none;
 }
