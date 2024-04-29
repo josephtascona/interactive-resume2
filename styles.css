@@ -93,7 +93,7 @@ body {
     color: white;
 }
 
-#arrowMessage {
+#backwardArrowMessage {
     width: 250px;
     height: 100px;
     background-color: black;
@@ -103,7 +103,27 @@ body {
     display: none;
 }
 
-#arrowMessage p {
+#backwardArrowMessage p {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    padding: 10px;
+    margin: 0;
+    color: white;
+}
+
+#forwardArrowMessage {
+    width: 250px;
+    height: 100px;
+    background-color: black;
+    position: absolute;
+    top: 300px;
+    left: 1450px;
+    display: none;
+}
+
+#forwardArrowMessage p {
     font-family: "Chakra Petch", sans-serif;
     font-weight: 700;
     font-style: normal;

@@ -5,13 +5,15 @@ window.addEventListener('beforeunload', function () {
 document.addEventListener("DOMContentLoaded", function () {
     var box = document.querySelector('#box');
     var spacebar = document.querySelector('#spacebar');
-    var arrowMessage = document.querySelector('#arrowMessage');
+    var backwardArrowMessage = document.querySelector('#backwardArrowMessage');
+    var forwardArrowMessage = document.querySelector('#forwardArrowMessage');
     var backwardArrow1 = document.querySelector('#backwardArrow1');
     var forwardArrow1 = document.querySelector('#forwardArrow1');
     var forwardInterval;
     var intervalOn = "";
     var pastLocations = [];
-    var arrowMessageShown = false;
+    var backwardArrowMessageShown = false;
+    var forwardArrowMessageShown = false;
 
     // Get the computed style of the box
     var boxStyle = getComputedStyle(box);
@@ -37,7 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
         box.style.left = boxLeft + "px";
         box.style.top = boxTop + "px";
         intervalOn = "";
-        arrowMessage.style.display = "none";
+        backwardArrowMessage.style.display = "none";
+        if (!forwardArrowMessageShown) {
+            forwardArrowMessage.style.display = "block";
+            forwardArrowMessageShown = true;
+        }
         window.scrollTo(0,0);
         clearInterval(forwardInterval)
     });
@@ -51,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         box.style.left = boxLeft + "px";
         box.style.top = boxTop + "px";
         intervalOn = "";
+        forwardArrowMessage.style.display = "none";
         window.scrollTo(1550, 0);
         clearInterval(forwardInterval)
     });
@@ -107,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!paused) {
             if (event.key === "s") {
                 spacebar.style.display = "none";
-                arrowMessage.style.display = "none";
                 // Stop the repeating action when the key is released
                 if (intervalOn == "forwardInterval") {
                     clearInterval(forwardInterval);
@@ -136,16 +142,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         if (boxLeft == 1750) {
                             window.scrollTo(1550, 0);
-                            if (arrowMessageShown) {
+                            if (backwardArrowMessageShown) {
                                 backwardArrow1.style.display = "block";
                                 forwardArrow1.style.display = "none";
                             }
                         }
-                        if (boxLeft == 1820 && !arrowMessageShown) {
+                        if (boxLeft == 1820 && !backwardArrowMessageShown) {
                             backwardArrow1.style.display = "block";
-                            arrowMessage.style.display = "block";
+                            backwardArrowMessage.style.display = "block";
                             intervalOn = "";
-                            arrowMessageShown = true;
+                            backwardArrowMessageShown = true;
                             clearInterval(forwardInterval);
                         }
                         if (boxLeft == 700 && num === -1) {
