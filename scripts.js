@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var forwardArrowMessage = document.querySelector('#forwardArrowMessage');
     var backwardArrow1 = document.querySelector('#backwardArrow1');
     var backwardArrow2 = document.querySelector('#backwardArrow2');
+    var backwardArrow3 = document.querySelector('#backwardArrow3');
     var forwardArrow1 = document.querySelector('#forwardArrow1');
     var forwardArrow2 = document.querySelector('#forwardArrow2');
+    var forwardArrow3 = document.querySelector('#forwardArrow3');
     var forwardInterval;
     var intervalOn = "";
     var pastLocations = [];
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     backwardArrow1.addEventListener('click', function() {
         backwardArrow1.style.display = "none";
         forwardArrow1.style.display = "block";
-        pastLocations.unshift([boxLeft, boxTop]);
+        pastLocations[0] = [boxLeft, boxTop];
         boxLeft = 800;
         boxTop = 530
         box.style.left = boxLeft + "px";
@@ -47,11 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
             forwardArrowMessageShown = true;
         }
         window.scrollTo(0,0);
-        clearInterval(forwardInterval)
+        clearInterval(forwardInterval);
     });
 
     backwardArrow2.addEventListener('click', function () {
-        pastLocations.unshift([boxLeft, boxTop]);
+        pastLocations[1] = [boxLeft, boxTop];
         boxLeft = 2105;
         boxTop = 530;
         box.style.left = boxLeft + "px";
@@ -61,10 +63,21 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(forwardInterval)
     });
 
+    backwardArrow3.addEventListener('click', function () {
+        pastLocations[2] = [boxLeft, boxTop];
+        boxLeft = 2105;
+        boxTop = 1230;
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        window.scrollTo(1550, 700);
+        clearInterval(forwardInterval)
+    });
+
     forwardArrow1.addEventListener('click', function() {
         backwardArrow1.style.display = "block";
         forwardArrow1.style.display = "none";
-        var currentValues = pastLocations.shift();
+        var currentValues = pastLocations[0];
         boxLeft = currentValues[0];
         boxTop = currentValues[1];
         box.style.left = boxLeft + "px";
@@ -76,13 +89,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     forwardArrow2.addEventListener('click', function () {
-        var currentValues = pastLocations.shift();
+        var currentValues = pastLocations[1];
         boxLeft = currentValues[0];
         boxTop = currentValues[1];
         box.style.left = boxLeft + "px";
         box.style.top = boxTop + "px";
         intervalOn = "";
         window.scrollTo(1550, 700);
+        clearInterval(forwardInterval)
+    });
+
+    forwardArrow3.addEventListener('click', function () {
+        var currentValues = pastLocations[2];
+        boxLeft = currentValues[0];
+        boxTop = currentValues[1];
+        box.style.left = boxLeft + "px";
+        box.style.top = boxTop + "px";
+        intervalOn = "";
+        window.scrollTo(1550, 1400);
         clearInterval(forwardInterval)
     });
 
@@ -160,11 +184,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         if (boxLeft === 2105 && boxTop === 750) {
                             window.scrollTo(1550, 700);
+                            pastLocations.push([boxLeft, boxTop])
                             backwardArrow2.style.display = "block";
                             forwardArrow2.style.display = "block";
                         }
-                        if (boxLeft === 2105 && boxTop === 1500) {
+                        if (boxLeft === 2105 && boxTop === 1450) {
                             window.scrollTo(1550, 1400);
+                            pastLocations.push([boxLeft, boxTop])
+                            backwardArrow3.style.display = "block";
+                            forwardArrow3.style.display = "block";
                         }
                         if (boxLeft == 1750) {
                             window.scrollTo(1550, 0);
@@ -174,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         }
                         if (boxLeft == 1820 && !backwardArrowMessageShown) {
+                            pastLocations.push([boxLeft, boxTop])
                             backwardArrow1.style.display = "block";
                             backwardArrowMessage.style.display = "block";
                             intervalOn = "";
