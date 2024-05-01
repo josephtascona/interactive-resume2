@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var pastLocations = [];
     var backwardArrowMessageShown = false;
     var forwardArrowMessageShown = false;
+    var shownSkills = false;
 
     // Get the computed style of the box
     var boxStyle = getComputedStyle(box);
@@ -33,6 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
     var typingDiv;
     var paused = false;
     var addedChars = 0;
+
+    function showSkills() {
+        var skillsSection = document.querySelector('.skills-section');
+        skillsSection.style.display = "block";
+        shownSkills = true;
+        paused = true;
+        setTimeout(function () {
+            var skillsSection = document.querySelector('.block-container');
+            skillsSection.style.display = "flex";
+        }, 500);
+        setTimeout(function() {
+            paused = false;
+        }, 4500);
+    }
 
     backwardArrow1.addEventListener('click', function() {
         backwardArrow1.style.display = "none";
@@ -181,6 +196,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                 boxLeft += 5;
                                 box.style.left = boxLeft + "px";
                             }
+                        }
+                        if (boxLeft === 2105 && boxTop === 530) {
+                            if (!shownSkills) {
+                                showSkills();
+                            }
+                            intervalOn = "";
+                            clearInterval(forwardInterval);
                         }
                         if (boxLeft === 2105 && boxTop === 750) {
                             window.scrollTo(1550, 700);
