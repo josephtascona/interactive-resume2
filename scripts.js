@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var backwardArrowMessageShown = false;
     var forwardArrowMessageShown = false;
     var shownSkills = false;
+    let experienceShown = false;
 
     // Get the computed style of the box
     var boxStyle = getComputedStyle(box);
@@ -30,10 +31,48 @@ document.addEventListener("DOMContentLoaded", function () {
     let i = 0;
     let j = 0;
     var title = ["About", "Education"];
-    var text = ["Lorem ipsum dolor sit amet consectetur adipisicing elit.\nMinus magni aut, ea soluta corrupti, ex sint nemo veritatis repellendus veniam facilis ipsum fuga, neque eaque autem minima ratione!\nAliquid, id?", "Bachelor of Science in Mathematics and Physics, 2026\nUniversity of Toronto, Toronto, Ontario"];
+    var text = ["Experienced Software Engineer attending University of Toronto.\nI bring a rich background in programming and quality assurance, notably from my recent role as Technical Analyst at the Ministry of Transportation.", "Bachelor of Science in Mathematics and Physics, 2026\nUniversity of Toronto, Toronto, Ontario"];
     var typingDiv;
     var paused = false;
     var addedChars = 0;
+    let currentPage = 1;
+    let experienceInterval; // Variable to store the interval ID
+
+    // Function to start the automatic navigation
+    function startAutoNavigation() {
+        experienceInterval = setInterval(() => {
+            currentPage = currentPage % 2 + 1;
+            showPage(currentPage);
+        }, 6000);
+    }
+
+    function showPage(pageNumber) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach((page, index) => {
+            if (index + 1 === pageNumber) {
+                page.style.display = 'flex';
+            } else {
+                page.style.display = 'none';
+            }
+        });
+
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            if (index + 1 === pageNumber) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+
+        currentPage = pageNumber;
+    }
+
+    // Event handler for dot clicks
+    window.dotClick = function(pageNumber) {
+        clearInterval(experienceInterval);
+        showPage(pageNumber); // Show the clicked page
+    }
 
     function showSkills() {
         var skillsSection = document.querySelector('.skills-section');
@@ -200,15 +239,32 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (boxLeft === 2105 && boxTop === 530) {
                             if (!shownSkills) {
                                 showSkills();
+                                intervalOn = "";
+                                clearInterval(forwardInterval);
                             }
-                            intervalOn = "";
-                            clearInterval(forwardInterval);
                         }
                         if (boxLeft === 2105 && boxTop === 750) {
                             window.scrollTo(1550, 700);
                             pastLocations.push([boxLeft, boxTop])
                             backwardArrow2.style.display = "block";
                             forwardArrow2.style.display = "block";
+                        }
+                        if (boxLeft === 2105 && boxTop === 1050) {
+                            if (!experienceShown) {
+                                paused = true;
+                                setTimeout(function () {
+                                    paused = false
+                                    spacebar.style.display = "block";
+                                }, 4000);
+                                intervalOn = "";
+                                clearInterval(forwardInterval);
+                                experienceShown = true;
+                                showPage(currentPage);
+                                let dotContainer = document.querySelector('#dot-container');
+                                dotContainer.style.display = "block";
+                                // Start automatic navigation
+                                startAutoNavigation();
+                            }
                         }
                         if (boxLeft === 2105 && boxTop === 1450) {
                             window.scrollTo(1550, 1400);

@@ -428,3 +428,61 @@ body {
     background-image: url('./game_controller_sharp_icon.png');
     background-size: cover;
 }
+
+#work-experience {
+    position: absolute;
+    left: 2420px;
+    top: 780px;
+}
+
+.page {
+    display: none;
+    width: 800px;
+    height: 650px;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 20px 0;
+    flex-direction: column;
+}
+
+#dot-container {
+    display: none;
+    text-align: center;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #333;
+}
+
+.page-left {
+    align-self: flex-start;
+}
+
+.page-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: -45px;
+}
+
+.page-right p {
+    margin: 5px 0px;
+}
+
+.page li {
+    line-height: 1.5;
+}
