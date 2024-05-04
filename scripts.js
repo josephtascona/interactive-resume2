@@ -20,12 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
     var forwardArrowMessageShown = false;
     var shownSkills = false;
     let experienceShown = false;
+    let projectsShown = false;
 
     // Get the computed style of the box
     var boxStyle = getComputedStyle(box);
     // Parse the left position as an integer
     var boxLeft = parseInt(boxStyle.left) || 0;
     var boxTop = parseInt(boxStyle.top) || 0;
+    let dotContainer = document.querySelector('#dot-container');
 
     let num = -1;
     let i = 0;
@@ -37,6 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var addedChars = 0;
     let currentPage = 1;
     let experienceInterval; // Variable to store the interval ID
+
+    function showProjects() {
+        var projectsSection = document.querySelector('.projects-section');
+        projectsSection.style.display = "block";
+        paused = true;
+        intervalOn = "";
+        clearInterval(forwardInterval);
+        setTimeout(function () {
+            paused = false
+            projectsShown = true;
+        }, 1500);
+    }
 
     // Function to start the automatic navigation
     function startAutoNavigation() {
@@ -126,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
         intervalOn = "";
         window.scrollTo(1550, 700);
         clearInterval(forwardInterval)
+        dotContainer.style.display = "block";
     });
 
     forwardArrow1.addEventListener('click', function() {
@@ -160,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
         box.style.left = boxLeft + "px";
         box.style.top = boxTop + "px";
         intervalOn = "";
+        dotContainer.style.display = "none";
         window.scrollTo(1550, 1400);
         clearInterval(forwardInterval)
     });
@@ -260,7 +276,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 clearInterval(forwardInterval);
                                 experienceShown = true;
                                 showPage(currentPage);
-                                let dotContainer = document.querySelector('#dot-container');
                                 dotContainer.style.display = "block";
                                 // Start automatic navigation
                                 startAutoNavigation();
@@ -271,6 +286,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             pastLocations.push([boxLeft, boxTop])
                             backwardArrow3.style.display = "block";
                             forwardArrow3.style.display = "block";
+                            dotContainer.style.display = "none";
+                        }
+                        if (boxLeft === 2105 && boxTop === 2080) {
+                            if (!projectsShown) {
+                                showProjects()
+                            }
                         }
                         if (boxLeft == 1750) {
                             window.scrollTo(1550, 0);
