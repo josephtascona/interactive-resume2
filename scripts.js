@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
             paused = false
             projectsShown = true;
-        }, 1500);
+        }, 500);
     }
 
     // Function to start the automatic navigation
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         experienceInterval = setInterval(() => {
             currentPage = currentPage % 2 + 1;
             showPage(currentPage);
-        }, 6000);
+        }, 5000);
     }
 
     function showPage(pageNumber) {
@@ -86,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
     window.dotClick = function(pageNumber) {
         clearInterval(experienceInterval);
         showPage(pageNumber); // Show the clicked page
+    }
+    
+    window.recenter = function() {
+        setTimeout(function () {
+            window.scrollTo(1550, 1400);
+        }, 1);
     }
 
     function showSkills() {
@@ -227,6 +233,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 35); // Adjust interval as needed
     }
 
+    function grow() {
+        var end = document.querySelector('.end');
+        end.style.display = "block";
+        setTimeout(function () {
+            var endResult = document.querySelector('.end-result');
+            endResult.style.display = "block";
+        }, 2000);
+        setTimeout(function () {
+            var endMessage = document.querySelector('#end-message');
+            endMessage.style.display = "none";
+            var endLinks = document.querySelector('#end-links');
+            endLinks.style.display = "flex";
+        }, 3000);
+    }
+
     // Listen for keydown event
     document.addEventListener("keydown", function (event) {
         if (!paused) {
@@ -251,6 +272,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 boxLeft += 5;
                                 box.style.left = boxLeft + "px";
                             }
+                        }
+                        if (boxLeft === 3205 && boxTop === 2080) {
+                            grow();
                         }
                         if (boxLeft === 2105 && boxTop === 530) {
                             if (!shownSkills) {
